@@ -1,6 +1,19 @@
-# TD
+<style>
+h1{
+    font-weight:bold;
+    font-family:"lucida handwriting"
+}
+h2{
+    text-decoration:underline;
+}
+</style>
 
-## <u>Exercice 1 :</u>
+<center>
+
+# TD:<br>les réseaux sémantiques
+</center>
+
+## Exercice 1 :
 
 - Un oiseau est un animal qui peut voler.
 - Un mammifère est un animal qui allaite ses petits.
@@ -20,12 +33,12 @@
 
         Oiseau -->|est un| Animal
         Oiseau -->|peut| Voler
-        Mammifere -->|est un| Animal
         Mammifere -->|allaite| Allaiter
+        Mammifere -->|est un| Animal
         ChauveSouris -->|est un| Mammifere
         ChauveSouris -->|est un| Oiseau
-        ChauveSouris -->|ne pond pas| Oeufs
         ChauveSouris -->|peut| Voler
+        ChauveSouris -->|ne pond pas| Oeufs
     ```
 
 2. Les propriétés que la chauve-souris hérite:
@@ -38,12 +51,15 @@
     - $\implies$ Contradiction : la chauve-souris ne peut pas être à la fois un oiseau et un mammifère selon les définitions classiques
 
 
-## <u>Exercice 2 :</u>
+## Exercice 2 :
 - Tous les poissons vivent dans l’eau.
 - Tous les animaux qui vivent dans l’eau peuvent nager.
 - Les dauphins sont des mammifères.
 - Les mammifères sont des animaux.
 - Les dauphins vivent dans l’eau.
+
+>En utilisant uniquement le réseau sémantique et la propagation d’héritage, démontrez que les dauphins peuvent nager
+
 
 ####  réseau sémantique
 ```mermaid
@@ -62,12 +78,17 @@ graph
     Eau -->|permet de| Nager
 ```
 
-## <u>Exercice 3 :</u>
+
+
+## Exercice 3 :
 - Une personne possède un âge (valeur numérique).
 - Un étudiant est une personne qui étudie un domaine.
 - Un enseignant est une personne qui enseigne un domaine.
 - Un professeur est à la fois enseignant et chercheur.
 - Le domaine enseigné doit être le même que le domaine étudié pour un même cours.
+
+>1. Construisez le réseau (nœuds, liens, types).
+>2. Identifiez le type de contrainte.
 
 #### réseau sémantique
 ```mermaid
@@ -93,7 +114,7 @@ graph
     Domaine -->|même pour| Cours
 ```
 
-## <u>Exercice 4 :</u>
+## Exercice 4 :
 - Chien → est un → Animal
 - Chat → est un → Animal
 - Animal → est un → ÊtreVivant
@@ -108,9 +129,9 @@ graph
     animal((Animal))
     etre((ÊtreVivant))
 
-    chien --est un--> animal
+    chat --lié à--> lait((Lait))
     chat --est un--> animal
+    chien --est un--> animal
     animal --est un--> etre
     chien --lié à--> os((Os))
-    chat --lié à--> lait((Lait))
     os --est sort de--> n((Nouriture))
