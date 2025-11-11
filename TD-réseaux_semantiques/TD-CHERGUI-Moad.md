@@ -21,31 +21,32 @@ h2{
 - Les chauves-souris ne pondent pas d’œufs.
 
 1. réseau sémantique
-    ```mermaid
+```mermaid
     graph
         Animal((Animal))
         Oiseau((Oiseau))
         Mammifere((Mammifère))
         ChauveSouris((Chauve-souris))
-        Oeufs((Œufs))
+        pondre((Pondre))
         Voler((Voler))
-        Allaiter((Allaite <br>ses petits))
+        Allaiter((Allaiter))
 
+        Mammifere -->|peut| Allaiter
+        Mammifere -->|est un| Animal
         Oiseau -->|est un| Animal
         Oiseau -->|peut| Voler
-        Mammifere -->|allaite| Allaiter
-        Mammifere -->|est un| Animal
         ChauveSouris -->|est un| Mammifere
         ChauveSouris -->|est un| Oiseau
         ChauveSouris -->|peut| Voler
-        ChauveSouris -->|ne pond pas| Oeufs
-    ```
+        ChauveSouris -->|peut| pondre
+        n(("non"))-->pondre
+```
 
-2. Les propriétés que la chauve-souris hérite:
+1. Les propriétés que la chauve-souris hérite:
     - De **Mammifère** : allaite ses petits
     - De **Oiseau** : peut voler
 
-3. Conflits identifiés :
+2. Conflits identifiés :
     - Un oiseau pond des oeufs, mais la chauve-souris ne pond pas d'Oeufs
     - Un oiseau n'allaite pas ses petits, mais la chauve-souris (mammifère) allaite ses petits
     - $\implies$ Contradiction : la chauve-souris ne peut pas être à la fois un oiseau et un mammifère selon les définitions classiques
@@ -63,21 +64,24 @@ h2{
 
 ####  réseau sémantique
 ```mermaid
-graph
+graph LR
     Animal((Animal))
     Poisson((Poisson))
     Mammifere((Mammifère))
     Dauphin((Dauphin))
-    Eau((Eau))
+    Eau((Etre <br> aquatique<hr>etre qui vie <br> dans l'eau))
     Nager((Nager))
 
-    Poisson -->|vit dans| Eau
-    Mammifere -->|est un| Animal
+    Poisson -->|est un| Eau
+    Dauphin -->|est un| Eau
     Dauphin -->|est un| Mammifere
-    Dauphin -->|vit dans| Eau
-    Eau -->|permet de| Nager
+    Mammifere -->|est un| Animal
+    Eau ---- et((et))
+    Animal----et
+    et-->|peut| Nager
 ```
 
+dauphin herite le pouvoire de najer de l'agent etre aquatique
 
 
 ## Exercice 3 :
@@ -121,6 +125,8 @@ graph
 - Chien → lié À → Os
 - Chat → lié À → Lait
 - Os → type → Nourriture
+>On active initialement le nœud Chien.<br>
+Appliquez une propagation d’activation (niveau = 3, facteur = 0.5).
 
 ```mermaid
 graph
