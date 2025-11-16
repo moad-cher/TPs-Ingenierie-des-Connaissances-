@@ -6,6 +6,7 @@ h1{
 h2{
     text-decoration:underline;
 }
+p{display:inline}
 </style>
 
 <center>
@@ -108,15 +109,17 @@ graph
 
     Personne -->|possède| Age
     Etudiant -->|est une| Personne
-    Etudiant -->|étudie| Domaine
+    étudie -->|agent| Etudiant 
+    étudie -->|objet| Domaine
     Enseignant -->|est une| Personne
-    Enseignant -->|enseigne| Domaine
-    Chercheur -->|est une| Personne
+    Cours -->|requiert| Domaine
+    enseigne -->|objet| Domaine
+    enseigne -->|agent| Enseignant
     Professeur -->|est un| Enseignant
     Professeur -->|est un| Chercheur
-    Cours -->|requiert| Domaine
-    Domaine -->|même pour| Cours
 ```
+`est un(e)` : logique
+<p style='border:1px solid;'> [un lien] </p>: conceptuel
 
 ## Exercice 4 :
 - Chien → est un → Animal
@@ -125,19 +128,134 @@ graph
 - Chien → lié À → Os
 - Chat → lié À → Lait
 - Os → type → Nourriture
->On active initialement le nœud Chien.<br>
-Appliquez une propagation d’activation (niveau = 3, facteur = 0.5).
+>On active initialement le nœud Chien.<br>Appliquez une propagation d’activation (niveau = 3, facteur = 0.5).
 
 ```mermaid
 graph
-    chien((Chien))
-    chat((Chat))
-    animal((Animal))
-    etre((ÊtreVivant))
+    chien((Chien<br> 1))
+    chat((Chat<br>0.25))
+    animal((Animal<br> 0.5))
+    etre((ÊtreVivant<br>0.25))
 
-    chat --lié à--> lait((Lait))
-    chat --est un--> animal
     chien --est un--> animal
+    chat --est un--> animal
     animal --est un--> etre
-    chien --lié à--> os((Os))
-    os --est sort de--> n((Nouriture))
+    os --est sort de--> n((Nouriture<br>0.25))
+    chien --lié à--> os((Os<br>0.5))
+    chat --lié à--> lait((Lait<br>0.125))
+```
+
+## Exercice 5 :
+- Les oiseaux peuvent voler. 
+- Les oiseaux nocturnes chassent la nuit. 
+- Les hiboux sont des oiseaux nocturnes. 
+- Les pingouins sont des oiseaux mais ne volent pas. 
+- Les hiboux ne vivent pas dans l'eau. 
+>Déterminez pour Pingouin et Hibou les propriétés héritées finales. 
+
+#### réseau sémantique
+```mermaid
+graph
+    Oiseau((Oiseau))
+    OiseauNocturne((Oiseau<br>Nocturne))
+    Hibou((Hibou))
+    Pingouin((Pingouin))
+    Voler((Voler))
+    Chasser((Chasser<br>la nuit))
+    Eau((Vivre dans<br>l'eau))
+    peut((peut))
+    peut2((peut))
+    peut-->|agent| Oiseau
+    peut-->|objet| Voler
+    OiseauNocturne -->|peut| Chasser
+    OiseauNocturne -->|est un| Oiseau
+    Hibou -->|est un| OiseauNocturne
+    n1((non))-->peut2
+    peut2 -->|agent|Hibou
+    peut2-->|objet|Eau
+    Pingouin -->|est un| Oiseau
+    Pingouin -->|exclusion|peut
+
+
+```
+
+#### Propriétés héritées finales :
+
+**Hibou :**
+- De **Oiseau** : peut voler
+- De **Oiseau Nocturne** : chasse la nuit
+
+**Pingouin :**
+- De **Oiseau** : (exclusion pour voler)
+
+
+## Exercice 6 :
+>Traduisez en réseau sémantique :
+
+- (∀x) Étudiant(x) → Personne(x) 
+- (∀x) Étudiant(x) → ¬Travailleur(x) 
+- Étudiant(Ali)
+```mermaid
+graph
+    Personne((Personne))
+    Etudiant((Étudiant))
+    Travailleur((Travailleur))
+    Ali((Ali))
+
+    Etudiant -->|est une| Personne
+    Etudiant -->|est un| Travailleur
+    n(non)--> Travailleur
+    Ali -->|est un| Etudiant
+```
+
+## Exercice 7 :
+
+#### réseau sémantique partitionné
+- Fièvre → symptôme → Maladie 
+- Toux → symptôme → MaladieRespiratoire 
+- Grippe → isa → MaladieRespiratoire 
+- Grippe → hasSymptom → Fièvre, Toux 
+- Pneumonie → isa → MaladieRespiratoire 
+- Pneumonie → hasSymptom → Fièvre, DouleurPoitrine 
+>Si un patient présente fièvre + toux, quelles maladies sont possibles ?
+
+
+1. Patient présente : Fièvre + Toux
+2. Grippe possède les deux symptômes (Fièvre + Toux) 
+3. Pneumonie possède Fièvre mais pas Toux
+
+**Maladies possibles : Grippe**
+
+```mermaid
+graph LR
+    subgraph Hypothèse
+        P((Patient))
+        F((Fièvre))
+        T((Toux))
+        P -->|présente| F
+        P -->|présente| T
+    end
+    
+    subgraph Conclusion
+        F-->|arg1|et1((et))
+        T-->|arg2|et1
+        et1-->|symptoms de|Grippe
+    end
+    T-->|arg1|et2((et))
+    D-->|arg2|et2
+    Grippe((Grippe))
+    Pn((Pneumonie))
+
+    et2-->|symptoms de|Pn
+
+    D((Douleur<br>Poitrine))
+    MR((Maladie<br>Respiratoire))
+    Maladie((Maladie))
+    Grippe -->|est une|MR
+    Pn -->|est une|MR
+    MR -->|est une|Maladie
+    I((implication))
+    I-->|h|Hypothèse
+    I-->|c|Conclusion
+
+```
