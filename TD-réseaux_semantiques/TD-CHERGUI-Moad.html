@@ -1,0 +1,267 @@
+<span id="markdown-mermaid" aria-hidden="true"
+                    data-dark-mode-theme="dark"
+                    data-light-mode-theme="neutral"
+                    data-max-text-size="50000"></span>
+                <style>
+h1{
+    font-weight:bold;
+    font-family:"lucida handwriting"
+}
+h2{
+    text-decoration:underline;
+}
+p{display:inline}
+</style>
+<script>
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({ startOnLoad: true });
+
+</script>
+<center>
+<h1 id="tdles-réseaux-sémantiques">TD:<br>les réseaux sémantiques</h1>
+</center>
+<h2 id="exercice-1-">Exercice 1 :</h2>
+<ul>
+<li>Un oiseau est un animal qui peut voler.</li>
+<li>Un mammifère est un animal qui allaite ses petits.</li>
+<li>Une chauve-souris est à la fois un mammifère et un oiseau.</li>
+<li>Les chauves-souris ne pondent pas d’œufs.</li>
+</ul>
+<ol>
+<li>réseau sémantique</li>
+</ol>
+<pre style="all:unset;"><div class="mermaid">graph
+        Animal((Animal))
+        Oiseau((Oiseau))
+        Mammifere((Mammifère))
+        ChauveSouris((Chauve-souris))
+        pondre((Pondre))
+        Voler((Voler))
+        Allaiter((Allaiter))
+
+        Mammifere --&gt;|peut| Allaiter
+        Mammifere --&gt;|est un| Animal
+        Oiseau --&gt;|est un| Animal
+        Oiseau --&gt;|peut| Voler
+        ChauveSouris --&gt;|est un| Mammifere
+        ChauveSouris --&gt;|est un| Oiseau
+        ChauveSouris --&gt;|peut| Voler
+        ChauveSouris --&gt;|peut| pondre
+        n(("non"))--&gt;pondre</div></pre>
+<ol>
+<li>
+<p>Les propriétés que la chauve-souris hérite:</p>
+<ul>
+<li>De <strong>Mammifère</strong> : allaite ses petits</li>
+<li>De <strong>Oiseau</strong> : peut voler</li>
+</ul>
+</li>
+<li>
+<p>Conflits identifiés :</p>
+<ul>
+<li>Un oiseau pond des oeufs, mais la chauve-souris ne pond pas d'Oeufs</li>
+<li>Un oiseau n'allaite pas ses petits, mais la chauve-souris (mammifère) allaite ses petits</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>  </mtext><mo>⟹</mo><mtext>  </mtext></mrow><annotation encoding="application/x-tex">\implies</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.549em;vertical-align:-0.024em;"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⟹</span><span class="mspace" style="margin-right:0.2778em;"></span></span></span></span> Contradiction : la chauve-souris ne peut pas être à la fois un oiseau et un mammifère selon les définitions classiques</li>
+</ul>
+</li>
+</ol>
+<h2 id="exercice-2-">Exercice 2 :</h2>
+<ul>
+<li>Tous les poissons vivent dans l’eau.</li>
+<li>Tous les animaux qui vivent dans l’eau peuvent nager.</li>
+<li>Les dauphins sont des mammifères.</li>
+<li>Les mammifères sont des animaux.</li>
+<li>Les dauphins vivent dans l’eau.</li>
+</ul>
+<blockquote>
+<p>En utilisant uniquement le réseau sémantique et la propagation d’héritage, démontrez que les dauphins peuvent nager</p>
+</blockquote>
+<h4 id="réseau-sémantique">réseau sémantique</h4>
+<pre style="all:unset;"><div class="mermaid">graph LR
+    Animal((Animal))
+    Poisson((Poisson))
+    Mammifere((Mammifère))
+    Dauphin((Dauphin))
+    Eau((Etre &lt;br&gt; aquatique&lt;hr&gt;etre qui vie &lt;br&gt; dans l'eau))
+    Nager((Nager))
+
+    Poisson --&gt;|est un| Eau
+    Dauphin --&gt;|est un| Eau
+    Dauphin --&gt;|est un| Mammifere
+    Mammifere --&gt;|est un| Animal
+    Eau ---- et((et))
+    Animal----et
+    et--&gt;|peut| Nager</div></pre>
+<p>dauphin herite le pouvoire de najer de l'agent etre aquatique</p>
+<h2 id="exercice-3-">Exercice 3 :</h2>
+<ul>
+<li>Une personne possède un âge (valeur numérique).</li>
+<li>Un étudiant est une personne qui étudie un domaine.</li>
+<li>Un enseignant est une personne qui enseigne un domaine.</li>
+<li>Un professeur est à la fois enseignant et chercheur.</li>
+<li>Le domaine enseigné doit être le même que le domaine étudié pour un même cours.</li>
+</ul>
+<blockquote>
+<ol>
+<li>Construisez le réseau (nœuds, liens, types).</li>
+<li>Identifiez le type de contrainte.</li>
+</ol>
+</blockquote>
+<h4 id="réseau-sémantique-1">réseau sémantique</h4>
+<pre style="all:unset;"><div class="mermaid">graph
+    Personne((Personne))
+    Etudiant((Étudiant))
+    Enseignant((Enseignant))
+    Chercheur((Chercheur))
+    Professeur((Professeur))
+    Age((Âge))
+    Domaine((Domaine))
+    Cours((Cours))
+
+    Personne --&gt;|possède| Age
+    Etudiant --&gt;|est une| Personne
+    étudie --&gt;|agent| Etudiant 
+    étudie --&gt;|objet| Domaine
+    Enseignant --&gt;|est une| Personne
+    Cours --&gt;|requiert| Domaine
+    enseigne --&gt;|objet| Domaine
+    enseigne --&gt;|agent| Enseignant
+    Professeur --&gt;|est un| Enseignant
+    Professeur --&gt;|est un| Chercheur</div></pre>
+<p><code>est un(e)</code> : logique</p>
+<p style='border:1px solid;'> [un lien] </p>: conceptuel
+<h2 id="exercice-4-">Exercice 4 :</h2>
+<ul>
+<li>Chien → est un → Animal</li>
+<li>Chat → est un → Animal</li>
+<li>Animal → est un → ÊtreVivant</li>
+<li>Chien → lié À → Os</li>
+<li>Chat → lié À → Lait</li>
+<li>Os → type → Nourriture</li>
+</ul>
+<blockquote>
+<p>On active initialement le nœud Chien.<br>Appliquez une propagation d’activation (niveau = 3, facteur = 0.5).</p>
+</blockquote>
+<pre style="all:unset;"><div class="mermaid">graph
+    chien((Chien&lt;br&gt; 1))
+    chat((Chat&lt;br&gt;0.25))
+    animal((Animal&lt;br&gt; 0.5))
+    etre((ÊtreVivant&lt;br&gt;0.25))
+
+    chien --est un--&gt; animal
+    chat --est un--&gt; animal
+    animal --est un--&gt; etre
+    os --est sort de--&gt; n((Nouriture&lt;br&gt;0.25))
+    chien --lié à--&gt; os((Os&lt;br&gt;0.5))
+    chat --lié à--&gt; lait((Lait&lt;br&gt;0.125))</div></pre>
+<h2 id="exercice-5-">Exercice 5 :</h2>
+<ul>
+<li>Les oiseaux peuvent voler.</li>
+<li>Les oiseaux nocturnes chassent la nuit.</li>
+<li>Les hiboux sont des oiseaux nocturnes.</li>
+<li>Les pingouins sont des oiseaux mais ne volent pas.</li>
+<li>Les hiboux ne vivent pas dans l'eau.</li>
+</ul>
+<blockquote>
+<p>Déterminez pour Pingouin et Hibou les propriétés héritées finales.</p>
+</blockquote>
+<h4 id="réseau-sémantique-2">réseau sémantique</h4>
+<pre style="all:unset;"><div class="mermaid">graph
+    Oiseau((Oiseau))
+    OiseauNocturne((Oiseau&lt;br&gt;Nocturne))
+    Hibou((Hibou))
+    Pingouin((Pingouin))
+    Voler((Voler))
+    Chasser((Chasser&lt;br&gt;la nuit))
+    Eau((Vivre dans&lt;br&gt;l'eau))
+    peut((peut))
+    peut2((peut))
+    peut--&gt;|agent| Oiseau
+    peut--&gt;|objet| Voler
+    OiseauNocturne --&gt;|peut| Chasser
+    OiseauNocturne --&gt;|est un| Oiseau
+    Hibou --&gt;|est un| OiseauNocturne
+    n1((non))--&gt;peut2
+    peut2 --&gt;|agent|Hibou
+    peut2--&gt;|objet|Eau
+    Pingouin --&gt;|est un| Oiseau
+    Pingouin --&gt;|exclusion|peut</div></pre>
+<h4 id="propriétés-héritées-finales-">Propriétés héritées finales :</h4>
+<p><strong>Hibou :</strong></p>
+<ul>
+<li>De <strong>Oiseau</strong> : peut voler</li>
+<li>De <strong>Oiseau Nocturne</strong> : chasse la nuit</li>
+</ul>
+<p><strong>Pingouin :</strong></p>
+<ul>
+<li>De <strong>Oiseau</strong> : (exclusion pour voler)</li>
+</ul>
+<h2 id="exercice-6-">Exercice 6 :</h2>
+<blockquote>
+<p>Traduisez en réseau sémantique :</p>
+</blockquote>
+<ul>
+<li>(∀x) Étudiant(x) → Personne(x)</li>
+<li>(∀x) Étudiant(x) → ¬Travailleur(x)</li>
+<li>Étudiant(Ali)</li>
+</ul>
+<pre style="all:unset;"><div class="mermaid">graph
+    Personne((Personne))
+    Etudiant((Étudiant))
+    Travailleur((Travailleur))
+    Ali((Ali))
+
+    Etudiant --&gt;|est une| Personne
+    Etudiant --&gt;|est un| Travailleur
+    n(non)--&gt; Travailleur
+    Ali --&gt;|est un| Etudiant</div></pre>
+<h2 id="exercice-7-">Exercice 7 :</h2>
+<h4 id="réseau-sémantique-partitionné">réseau sémantique partitionné</h4>
+<ul>
+<li>Fièvre → symptôme → Maladie</li>
+<li>Toux → symptôme → MaladieRespiratoire</li>
+<li>Grippe → isa → MaladieRespiratoire</li>
+<li>Grippe → hasSymptom → Fièvre, Toux</li>
+<li>Pneumonie → isa → MaladieRespiratoire</li>
+<li>Pneumonie → hasSymptom → Fièvre, DouleurPoitrine</li>
+</ul>
+<blockquote>
+<p>Si un patient présente fièvre + toux, quelles maladies sont possibles ?</p>
+</blockquote>
+<pre style="all:unset;"><div class="mermaid">graph LR
+
+    subgraph Hypothèse
+        P((Patient))
+        F((Fièvre))
+        T((Toux))
+        P --&gt;|présente| F
+        P --&gt;|présente| T
+    end
+    
+    subgraph Conclusion
+        F--&gt;|arg1|et1((et))
+        T--&gt;|arg2|et1
+        et1--&gt;|symptoms de|Grippe
+    end
+    T--&gt;|arg1|et2((et))
+    D--&gt;|arg2|et2
+    Grippe((Grippe))
+    Pn((Pneumonie))
+
+    et2--&gt;|symptoms de|Pn
+
+    D((Douleur&lt;br&gt;Poitrine))
+    MR((Maladie&lt;br&gt;Respiratoire))
+    Maladie((Maladie))
+    Grippe --&gt;|est une|MR
+    Pn --&gt;|est une|MR
+    MR --&gt;|est une|Maladie
+    I((implication))
+    I--&gt;|h|Hypothèse
+    I--&gt;|c|Conclusion</div></pre>
+<ol>
+<li>Patient présente : Fièvre + Toux</li>
+<li>Grippe possède les deux symptômes (Fièvre + Toux)</li>
+<li>Pneumonie possède Fièvre mais pas Toux</li>
+</ol>
+<p><strong>Maladies possibles : Grippe</strong></p>
