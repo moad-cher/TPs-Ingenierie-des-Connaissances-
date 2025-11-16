@@ -220,14 +220,9 @@ graph
 >Si un patient présente fièvre + toux, quelles maladies sont possibles ?
 
 
-1. Patient présente : Fièvre + Toux
-2. Grippe possède les deux symptômes (Fièvre + Toux) 
-3. Pneumonie possède Fièvre mais pas Toux
-
-**Maladies possibles : Grippe**
-
 ```mermaid
 graph LR
+
     subgraph Hypothèse
         P((Patient))
         F((Fièvre))
@@ -259,3 +254,9 @@ graph LR
     I-->|c|Conclusion
 
 ```
+
+1. Patient présente : Fièvre + Toux
+2. Grippe possède les deux symptômes (Fièvre + Toux) 
+3. Pneumonie possède Fièvre mais pas Toux
+
+**Maladies possibles : Grippe**
