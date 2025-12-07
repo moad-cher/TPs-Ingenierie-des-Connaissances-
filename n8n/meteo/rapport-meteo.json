@@ -1,0 +1,133 @@
+{
+  "rapport_genere_le": "2025-12-04T02:58:10.350Z",
+  "nombre_villes": 5,
+  "villes": [
+    {
+      "data": [
+        {
+          "ville": "Paris",
+          "latitude": 48.8566,
+          "longitude": 2.3522,
+          "temperature": 6.2,
+          "vent_kmh": 11.2,
+          "precipitation_mm": 0,
+          "qualite_air_aqi": 24,
+          "score_risque": 19,
+          "niveau_alerte": "VERT",
+          "emoji": "🟢",
+          "action_requise": "Opérations normales",
+          "timestamp": "2025-12-04T02:58:07.121Z",
+          "details_calcul": {
+            "tempScore": 38,
+            "windScore": 11,
+            "rainScore": 0,
+            "aqiScore": 24
+          }
+        }
+      ]
+    },
+    {
+      "data": [
+        {
+          "ville": "Berlin",
+          "latitude": 52.52,
+          "longitude": 13.405,
+          "temperature": 1.3,
+          "vent_kmh": 6.6,
+          "precipitation_mm": 0,
+          "qualite_air_aqi": 38,
+          "score_risque": 35,
+          "niveau_alerte": "JAUNE",
+          "emoji": "🟡",
+          "action_requise": "Surveillance renforcée",
+          "timestamp": "2025-12-04T02:58:07.931Z",
+          "details_calcul": {
+            "tempScore": 87,
+            "windScore": 7,
+            "rainScore": 0,
+            "aqiScore": 38
+          }
+        }
+      ]
+    },
+    {
+      "data": [
+        {
+          "ville": "Madrid",
+          "latitude": 40.4168,
+          "longitude": -3.7038,
+          "temperature": 5.1,
+          "vent_kmh": 10.3,
+          "precipitation_mm": 0,
+          "qualite_air_aqi": 17,
+          "score_risque": 21,
+          "niveau_alerte": "VERT",
+          "emoji": "🟢",
+          "action_requise": "Opérations normales",
+          "timestamp": "2025-12-04T02:58:08.710Z",
+          "details_calcul": {
+            "tempScore": 49,
+            "windScore": 10,
+            "rainScore": 0,
+            "aqiScore": 17
+          }
+        }
+      ]
+    },
+    {
+      "data": [
+        {
+          "ville": "Rome",
+          "latitude": 41.9028,
+          "longitude": 12.4964,
+          "temperature": 5.9,
+          "vent_kmh": 3.9,
+          "precipitation_mm": 0,
+          "qualite_air_aqi": 49,
+          "score_risque": 23,
+          "niveau_alerte": "VERT",
+          "emoji": "🟢",
+          "action_requise": "Opérations normales",
+          "timestamp": "2025-12-04T02:58:09.542Z",
+          "details_calcul": {
+            "tempScore": 41,
+            "windScore": 4,
+            "rainScore": 0,
+            "aqiScore": 49
+          }
+        }
+      ]
+    },
+    {
+      "data": [
+        {
+          "ville": "Amsterdam",
+          "latitude": 52.3676,
+          "longitude": 4.9041,
+          "temperature": 4.9,
+          "vent_kmh": 11.2,
+          "precipitation_mm": 0,
+          "qualite_air_aqi": 27,
+          "score_risque": 24,
+          "niveau_alerte": "VERT",
+          "emoji": "🟢",
+          "action_requise": "Opérations normales",
+          "timestamp": "2025-12-04T02:58:10.318Z",
+          "details_calcul": {
+            "tempScore": 51,
+            "windScore": 11,
+            "rainScore": 0,
+            "aqiScore": 27
+          }
+        }
+      ]
+    }
+  ],
+  "statistiques": {
+    "alertes_rouges": 0,
+    "alertes_orange": 0,
+    "alertes_jaunes": 0,
+    "alertes_vertes": 0,
+    "score_moyen": null
+  }
+}

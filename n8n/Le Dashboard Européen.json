@@ -1,0 +1,172 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5637cac3-6161-4b4d-bda7-2062897b3a9d",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://restcountries.com/v3.1/region/europe",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "c2c8ad08-428b-4940-b485-ccfc84feb312",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nlet items = $input.all()\n// Loop through all items\nreturn items.map(item => {\n  const country = item.json;\n  \n  // Extract simple fields\n  const countryName = country.name?.common || 'N/A';\n  const capital = country.capital?.[0] || 'N/A';\n  const population = country.population || 0;\n  const area = country.area || 0;\n  \n  // Calculate density\n  const density = area > 0 ? Math.round(population / area) : 0;\n  \n  // Extract languages (object to comma-separated string)\n  const languages = country.languages \n    ? Object.values(country.languages).join(', ') \n    : 'N/A';\n  \n  // Extract currency (first one)\n  const currency = country.currencies \n    ? Object.values(country.currencies)[0]?.name || 'N/A'\n    : 'N/A';\n  \n  // Flag URL\n  const flagUrl = country.flags?.png || 'N/A';\n  \n  return {\n    json: {\n      country: countryName,\n      capital: capital,\n      population: population,\n      area_km2: area,\n      density: density,\n      languages: languages,\n      currency: currency,\n      flag_url: flagUrl\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "cabaa2ba-bb68-4e0d-8765-145ffa2f8ce4",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c546e223-78f3-40ef-b6fc-cbad3ada9ba9",
+              "leftValue": "={{ $json.population }}",
+              "rightValue": 100000,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        0
+      ],
+      "id": "a4e331a8-f858-43ac-8fec-07b63c9b0c1a",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1XzJ-F8auX6m3vB1MR_pPGm0PuAmNMSPisOPhxAchWZg/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        832,
+        0
+      ],
+      "id": "9012c444-cc4a-41ed-bcfe-c9efc2867ce3",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "3gxAIln94Gr7dpYu",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "25a67796-f792-43a1-94b6-7b36591bc349",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ccc6a3b3227d019e827df143ac6a17abd5a9759ede54fb443ece8ca7a4b0abaf"
+  },
+  "id": "Qx66XaqJXcYdepx9",
+  "tags": []
+}
