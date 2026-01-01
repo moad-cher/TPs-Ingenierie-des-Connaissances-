@@ -26,6 +26,10 @@ ex:partOf a rdf:Property ;
     rdfs:range ex:Course .
 
 ex:teach a rdf:Property ;
-    rdfs:domain ex:Teacher ;
+    rdfs:domain ex:Professor ;
     rdfs:range ex:Course .
+
+ex:teachLab a rdf:Property ;
+    rdfs:domain ex:Assistant ;
+    rdfs:range ex:LaboratoryCourse .
 
