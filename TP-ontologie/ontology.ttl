@@ -1,0 +1,31 @@
+@prefix ex: <http://example.org/ontology/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Assistant a rdfs:Class ;
+    rdfs:subClassOf ex:Teacher .
+
+ex:Course a rdfs:Class .
+
+ex:Homework a rdfs:Class .
+
+ex:LaboratoryCourse a rdfs:Class ;
+    rdfs:subClassOf ex:Course .
+
+ex:Professor a rdfs:Class ;
+    rdfs:subClassOf ex:Teacher .
+
+ex:Teacher a rdfs:Class .
+
+ex:organizedBy a rdf:Property ;
+    rdfs:domain ex:Course ;
+    rdfs:range ex:Teacher .
+
+ex:partOf a rdf:Property ;
+    rdfs:domain ex:Homework ;
+    rdfs:range ex:Course .
+
+ex:teach a rdf:Property ;
+    rdfs:domain ex:Teacher ;
+    rdfs:range ex:Course .
+
